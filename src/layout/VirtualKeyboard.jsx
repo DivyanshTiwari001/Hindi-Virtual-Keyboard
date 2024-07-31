@@ -57,7 +57,7 @@ function VirtualKeyboard({ onKeyPress,textAreaRef,caretHandler }) {
   return (
     <div className='w-full absolute md:relative bottom-0 flex flex-col items-center  md:flex-row justify-center'>
    { currentLayer==2 && <div className='w-full md:w-fit md:mr-2 flex items-center justify-center'>
-        <ParallelColLayout cols={[SPECIAL_CHARS['set1'],SPECIAL_CHARS['set2'],CONSONANTS['varg-7'],['Layer','Del']]} keyPress={handleCharClick} layers={{currentLayer,setLayer}}/>
+        <ParallelColLayout cols={[SPECIAL_CHARS['set1'],SPECIAL_CHARS['set2'],CONSONANTS['varg-7'],['Layer','Del','<','>']]} keyPress={handleCharClick} layers={{currentLayer,setLayer}} caretHandler={caretHandler}/>
     </div>
   }{
     currentLayer==1 && <div className='w-full justify-center items-center md:w-fit flex flex-row'>

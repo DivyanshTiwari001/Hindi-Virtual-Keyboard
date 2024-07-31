@@ -1,6 +1,6 @@
 import React from 'react'
 
-function ParallelColLayout({cols,keyPress,layers}) {
+function ParallelColLayout({cols,keyPress,layers,caretHandler}) {
     const darkChars = ['Layer','Del','<','>']
   return (
     <div className='flex flex-row justify-center'>
@@ -20,6 +20,12 @@ function ParallelColLayout({cols,keyPress,layers}) {
                                             if(prevLayer==3)return 1;
                                             return prevLayer+1;
                                         })
+                                    }
+                                    else if(elem==='<'){
+                                        caretHandler(-1)
+                                    }
+                                    else if(elem==='>'){
+                                        caretHandler(1)
                                     }
                                     else keyPress(elem)
                                 }
