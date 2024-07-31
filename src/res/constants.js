@@ -37,5 +37,6 @@ export const CONSTANT_COMBINATIONS_MAPPING = {
   'अः': 'ः',
   'अँ': 'ँ', 
   'ॅ': 'ॅ',
-  'ॉ': 'ॉ'
+  'ॉ': 'ॉ',
+  ' ':' '
 };
