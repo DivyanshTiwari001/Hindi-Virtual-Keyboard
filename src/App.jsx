@@ -20,6 +20,7 @@ function App() {
   const handleKeyPresses = (character,removeLast)=>{
     let pos = textareaRef.current.selectionStart;
     if(character===null && removeLast){
+      if(pos==0)return;
       setCaretPosition(prevpos=>pos-1)
       setText(prevText=>{
         return prevText.slice(0,pos-1) + prevText.slice(pos);
