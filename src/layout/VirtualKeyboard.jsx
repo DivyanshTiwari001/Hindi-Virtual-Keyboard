@@ -83,7 +83,7 @@ function VirtualKeyboard({ onKeyPress,textAreaRef,caretHandler }) {
             caretHandler={caretHandler}
             isChildren={true}
         >
-            <button className='w-36 md:w-48 border-2 border-red-400 h-full' onClick={()=>{handleCharClick(' ')}}>Space</button>
+            <button className='w-36 md:w-48 border-2 border-red-400 h-full text-white bg-red-500 text-bolder font-serif' onClick={()=>{handleCharClick(' ')}}>स्पेस</button>
         </Layout>
     </Layout>
     </Layout>
