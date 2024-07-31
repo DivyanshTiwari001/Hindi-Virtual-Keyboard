@@ -26,13 +26,13 @@ function App() {
       })
     }
     else if(removeLast){
-      setCaretPosition(prevpos=>pos+1)
+      setCaretPosition(prevpos=>pos+character.length)
       setText(prevText=>{
         return  prevText.slice(0,pos-1) + character + prevText.slice(pos);
       })
     }
     else{
-      setCaretPosition(prevpos=>pos+1)
+      setCaretPosition(prevpos=>pos+character.length)
       setText(prevText=>{
         return prevText.slice(0,pos) + character + prevText.slice(pos)
       })
