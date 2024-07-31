@@ -7,7 +7,7 @@ function Layout({row1,row2,col1,col2,keyPress,isChildren,children,layers,caretHa
             row1 && <div className='flex justify-center '>
             {
                 row1.map((elem,index)=>{
-                    return <button className={darkChars.includes(elem)?"bg-blue-700 text-white font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded w-16":"bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded w-16" } 
+                    return <button className={darkChars.includes(elem)?"bg-blue-700 text-white font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded md:w-16 w-12":"bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded md:w-16 w-12" } 
                     onClick={()=>{
                         if(elem==='<'){
                             caretHandler(-1)
@@ -58,7 +58,7 @@ function Layout({row1,row2,col1,col2,keyPress,isChildren,children,layers,caretHa
            row2 && <div className='flex justify-center '>
             {
                 row2.map((elem,index)=>{
-                    return <button className={darkChars.includes(elem)?"bg-blue-700 text-white font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded w-16":"bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded w-16" } 
+                    return <button className={darkChars.includes(elem)?"bg-blue-700 text-white font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded md:w-16 w-12":"bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded md:w-16 w-12" } 
                     onClick={()=>{
                         if(elem=='Del'){
                             keyPress(null,true)
