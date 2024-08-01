@@ -55,17 +55,31 @@ function VirtualKeyboard({ onKeyPress,textAreaRef,caretHandler }) {
   };
 
   return (
-    <div className='w-full absolute md:relative bottom-0 flex flex-col items-center  md:flex-row justify-center'>
-   { currentLayer==2 && <div className='w-full md:w-fit md:mr-2 flex items-center justify-center'>
-        <ParallelColLayout cols={[SPECIAL_CHARS['set1'],SPECIAL_CHARS['set2'],CONSONANTS['varg-7'],['Layer','Del','<','>']]} keyPress={handleCharClick} layers={{currentLayer,setLayer}} caretHandler={caretHandler}/>
+    <div className='w-full absolute md:relative bottom-1 flex flex-col items-center  md:flex-row justify-center'>
+   { currentLayer==2 && <div className='w-full justify-center items-center md:w-fit flex flex-row'>
+    <Layout 
+    row1={CONSONANTS['varg-5']} 
+    row2={CONSONANTS['varg-6']}
+    col1={CONSONANTS['varg-7']}
+    col2={SPECIAL_CHARS['set1']} 
+    keyPress={handleConsonantClick}
+    isChildren={true}>
+        <Layout
+            row1={VOWELS['harshwa'].slice(0,5)}
+            row2={VOWELS['dirgha'].slice(0,5)}
+            col1={VOWELS['harshwa'].slice(5)}
+            col2={VOWELS['dirgha'].slice(5)}
+            keyPress={handleCharClick}
+            layers={{currentLayer,setLayer}}
+            caretHandler={caretHandler}
+            isChildren={true}
+        >
+            <button className='w-36 md:w-48 border-2 border-red-400 h-full text-white bg-red-500 text-bolder' onClick={()=>{handleCharClick(' ')}}>स्पेस</button>
+        </Layout>
+    </Layout>
     </div>
   }{
     currentLayer==1 && <div className='w-full justify-center items-center md:w-fit flex flex-row'>
-    <Layout
-    row1={CONSONANTS['varg-5']} 
-    row2={CONSONANTS['varg-6']}
-    isChildren={true}
-    keyPress={handleConsonantClick}>
     <Layout 
     row1={CONSONANTS['varg-1']} 
     row2={CONSONANTS['varg-2']}
@@ -86,11 +100,10 @@ function VirtualKeyboard({ onKeyPress,textAreaRef,caretHandler }) {
             <button className='w-36 md:w-48 border-2 border-red-400 h-full text-white bg-red-500 text-bolder' onClick={()=>{handleCharClick(' ')}}>स्पेस</button>
         </Layout>
     </Layout>
-    </Layout>
     </div>
   }{
     currentLayer==3 && <div className='w-full md:w-fit md:ml-2 flex items-center justify-center'>
-        <ParallelColLayout cols={[[1,4,7,'Layer'],[2,5,8,0],[3,6,9,'Del']]} keyPress={handleCharClick} layers={{currentLayer,setLayer}}/>
+        <ParallelColLayout cols={[['+','-','/','*','<'],['1','4','7','^','%'],['2','5','8','0','='],['3','6','9','.','₹'],SPECIAL_CHARS['set2'],['Layer','Del','!','?','>']]} keyPress={handleCharClick} layers={{currentLayer,setLayer}} caretHandler={caretHandler} columnWidth={'w-1/6'}/>
 
     </div>
   }
