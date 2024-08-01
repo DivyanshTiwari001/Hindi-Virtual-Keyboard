@@ -1,5 +1,5 @@
 // src/VirtualKeyboard.js
-import React, { useState } from 'react';
+import React, { useState,useRef } from 'react';
 import { VOWELS, SPECIAL_CHARS, CONSONANTS, CONSTANT_COMBINATIONS_MAPPING,DIACRATICS } from '../res/constants';
 import Layout from './Layout';
 import ParallelColLayout from './ParallelColLayout';
@@ -8,7 +8,21 @@ function VirtualKeyboard({ onKeyPress,textAreaRef,caretHandler }) {
   const [currentConsonant, setCurrentConsonant] = useState(null);
   const [currentVowel,setVowel] = useState(null);
   const [currentLayer,setLayer] = useState(1);
+  const spaceIntervalRef = useRef(null)
+  const spaceTimoutRef = useRef(null)
 
+  const mouseDownHandlerForSpace = ()=>{
+     handleCharClick(' ');
+     spaceTimoutRef.current = setTimeout(()=>{
+          spaceIntervalRef.current = setInterval(()=>{handleCharClick(' ')},50)
+        },1000)
+  }
+  const mouseUpHandlerForSpace = ()=>{
+    clearInterval(spaceIntervalRef.current);
+    clearTimeout(timoutRef.current)
+    spaceIntervalRef.current = null
+    spaceTimoutRef.current = null
+  }
   const handleConsonantClick = (consonant) => {
     textAreaRef.current.focus();
     setCurrentConsonant(consonant);
@@ -74,7 +88,7 @@ function VirtualKeyboard({ onKeyPress,textAreaRef,caretHandler }) {
             caretHandler={caretHandler}
             isChildren={true}
         >
-            <button className='w-36 md:w-48 border-2 border-red-400 h-full text-white bg-red-500 text-bolder' onClick={()=>{handleCharClick(' ')}}>स्पेस</button>
+            <button className='w-36 md:w-48 border-2 border-red-400 h-full text-white bg-red-500 text-bolder' onClick={()=>{handleCharClick(' ')}} onMouseDown={mouseDownHandlerForSpace} onMouseUp={mouseUpHandlerForSpace}>स्पेस</button>
         </Layout>
     </Layout>
     </div>
@@ -97,7 +111,7 @@ function VirtualKeyboard({ onKeyPress,textAreaRef,caretHandler }) {
             caretHandler={caretHandler}
             isChildren={true}
         >
-            <button className='w-36 md:w-48 border-2 border-red-400 h-full text-white bg-red-500 text-bolder' onClick={()=>{handleCharClick(' ')}}>स्पेस</button>
+            <button className='w-36 md:w-48 border-2 border-red-400 h-full text-white bg-red-500 text-bolder' onClick={()=>{handleCharClick(' ')}} onMouseDown={mouseDownHandlerForSpace} onMouseUp={mouseUpHandlerForSpace}>स्पेस</button>
         </Layout>
     </Layout>
     </div>
