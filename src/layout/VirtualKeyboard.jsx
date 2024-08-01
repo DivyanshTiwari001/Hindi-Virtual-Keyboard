@@ -10,8 +10,17 @@ function VirtualKeyboard({ onKeyPress,textAreaRef,caretHandler }) {
   const [currentLayer,setLayer] = useState(1);
   const spaceIntervalRef = useRef(null)
   const spaceTimoutRef = useRef(null)
+  const touchFlagRef = useRef(false);
 
-  const mouseDownHandlerForSpace = ()=>{
+  const preventMouseEvents = (event) => {
+    if (touchFlagRef.current) {
+      event.preventDefault();  // Prevent the default mouse event behavior
+      event.stopPropagation();  // Stop the event from propagating further
+    }
+  };
+
+  const mouseDownHandlerForSpace = (e)=>{
+    if(e.type==='touchstart')touchFlagRef.current = true;
      handleCharClick(' ');
      spaceTimoutRef.current = setTimeout(()=>{
           spaceIntervalRef.current = setInterval(()=>{handleCharClick(' ')},50)
@@ -22,6 +31,7 @@ function VirtualKeyboard({ onKeyPress,textAreaRef,caretHandler }) {
     clearTimeout(timoutRef.current)
     spaceIntervalRef.current = null
     spaceTimoutRef.current = null
+    touchFlagRef.current = false
   }
   const handleConsonantClick = (consonant) => {
     textAreaRef.current.focus();
@@ -77,6 +87,7 @@ function VirtualKeyboard({ onKeyPress,textAreaRef,caretHandler }) {
     col1={CONSONANTS['varg-7']}
     col2={SPECIAL_CHARS['set1']} 
     keyPress={handleConsonantClick}
+    touch = {{touchFlagRef,preventMouseEvents}}
     isChildren={true}>
         <Layout
             row1={VOWELS['harshwa'].slice(0,5)}
@@ -86,9 +97,10 @@ function VirtualKeyboard({ onKeyPress,textAreaRef,caretHandler }) {
             keyPress={handleCharClick}
             layers={{currentLayer,setLayer}}
             caretHandler={caretHandler}
+            touch = {{touchFlagRef,preventMouseEvents}}
             isChildren={true}
         >
-            <button className='w-36 md:w-48 border-2 border-red-400 h-full text-white bg-red-500 text-bolder' onClick={()=>{handleCharClick(' ')}} onMouseDown={mouseDownHandlerForSpace} onMouseUp={mouseUpHandlerForSpace}>स्पेस</button>
+            <button className='w-36 md:w-48 border-2 border-red-400 h-full text-white bg-red-500 text-bolder' onClick={()=>{handleCharClick(' ')}} onMouseDown={(e)=>{preventMouseEvents(e);mouseDownHandlerForSpace(e)}} onMouseUp={mouseUpHandlerForSpace} onTouchStart={mouseDownHandlerForSpace} onTouchEnd={mouseDownHandlerForSpace}>स्पेस</button>
         </Layout>
     </Layout>
     </div>
@@ -100,6 +112,7 @@ function VirtualKeyboard({ onKeyPress,textAreaRef,caretHandler }) {
     col1={CONSONANTS['varg-3']}
     col2={CONSONANTS['varg-4']} 
     keyPress={handleConsonantClick}
+    touch = {{touchFlagRef,preventMouseEvents}}
     isChildren={true}>
         <Layout
             row1={VOWELS['harshwa'].slice(0,5)}
@@ -109,15 +122,16 @@ function VirtualKeyboard({ onKeyPress,textAreaRef,caretHandler }) {
             keyPress={handleCharClick}
             layers={{currentLayer,setLayer}}
             caretHandler={caretHandler}
+            touch = {{touchFlagRef,preventMouseEvents}}
             isChildren={true}
         >
-            <button className='w-36 md:w-48 border-2 border-red-400 h-full text-white bg-red-500 text-bolder' onClick={()=>{handleCharClick(' ')}} onMouseDown={mouseDownHandlerForSpace} onMouseUp={mouseUpHandlerForSpace}>स्पेस</button>
+            <button className='w-36 md:w-48 border-2 border-red-400 h-full text-white bg-red-500 text-bolder' onClick={()=>{handleCharClick(' ')}} onMouseDown={mouseDownHandlerForSpace} onMouseUp={mouseUpHandlerForSpace} onTouchStart={mouseDownHandlerForSpace} onTouchEnd={mouseUpHandlerForSpace}>स्पेस</button>
         </Layout>
     </Layout>
     </div>
   }{
     currentLayer==3 && <div className='w-full md:w-fit md:ml-2 flex items-center justify-center'>
-        <ParallelColLayout cols={[['+','-','/','*','<'],['1','4','7','Layer','%'],['2','5','8','0','='],['3','6','9','.','₹'],SPECIAL_CHARS['set2'],['Del','^','!','?','>']]} keyPress={handleCharClick} layers={{currentLayer,setLayer}} caretHandler={caretHandler} columnWidth={'w-1/6'}/>
+        <ParallelColLayout cols={[['+','-','/','*','<'],['1','4','7','Layer','%'],['2','5','8','0','='],['3','6','9','.','₹'],SPECIAL_CHARS['set2'],['Del','^','!','?','>']]} keyPress={handleCharClick} layers={{currentLayer,setLayer}} caretHandler={caretHandler} columnWidth={'w-1/6'} touch = {{touchFlagRef,preventMouseEvents}}/>
 
     </div>
   }
