@@ -41,7 +41,7 @@ function App() {
   }
   return(
     <div className='w-full h-screen flex flex-col items-center'>
-      <textarea className='w-full md:w-3/4 h-40 mt-3 mb-3 text-xl text-orange-400 font-semibold  border-2 border-black caret-slate-950' value={text} ref={textareaRef} onChange={(e)=>{setText(e.target.value)}} inputMode='none'/>
+      <textarea className='w-5/6 md:3/4 m-3 h-40 rounded-md text-xl text-orange-400 font-semibold  border-2 border-black caret-slate-950' value={text} ref={textareaRef} onChange={(e)=>{setText(e.target.value)}} inputMode='none'/>
       <VirtualKeyboard onKeyPress={handleKeyPresses} textAreaRef = {textareaRef} caretHandler={caretHandler}/>
     </div>
   )
