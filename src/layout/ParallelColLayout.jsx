@@ -9,7 +9,7 @@ function ParallelColLayout({cols,keyPress,layers,caretHandler,columnWidth,longPr
                 return <div className={`flex flex-col item-center ${columnWidth}`}>
                     {
                         charList.map((elem,index)=>{
-                            return <button className={darkChars.includes(elem)?"bg-blue-700 text-white font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded w-full":"bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded w-full" }
+                            return <button className={darkChars.includes(elem)?"bg-blue-700 text-white font-semibold  py-2 px-4 border border-blue-500 active:border-transparent rounded w-full":"bg-transparent active:bg-blue-500 text-blue-700 font-semibold active:text-white py-2 px-4 border border-blue-500 active:border-transparent rounded w-full" }
                             onClick={
                                 ()=>{
                                     if(elem=='⌫'){
