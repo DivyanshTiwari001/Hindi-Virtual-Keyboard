@@ -1,13 +1,68 @@
 // src/VirtualKeyboard.js
-import React, { useState,useRef } from 'react';
+import React, { useState,useRef, useEffect } from 'react';
 import { VOWELS, SPECIAL_CHARS, CONSONANTS, CONSTANT_COMBINATIONS_MAPPING,DIACRATICS } from '../res/constants';
 import Layout from './Layout';
 import ParallelColLayout from './ParallelColLayout';
 
-function VirtualKeyboard({ onKeyPress,textAreaRef,caretHandler }) {
+function VirtualKeyboard({ onKeyPress,textAreaRef,caretHandler}) {
   const [currentConsonant, setCurrentConsonant] = useState(null);
   const [currentVowel,setVowel] = useState(null);
   const [currentLayer,setLayer] = useState(1);
+  const [keyPressed,setkeyPressed] = useState({isPressed:false,type:null});
+  const intervalRef = useRef(null)
+  const timeoutRef = useRef(null)
+  useEffect(()=>{
+    textAreaRef.current.focus();
+    if(keyPressed.isPressed){
+      if(keyPressed.type == ' '){
+        clearInterval(intervalRef.current);
+        clearTimeout(timeoutRef.current);
+        handleCharClick(' ');
+        timeoutRef.current= setTimeout(()=>{
+        intervalRef.current = setInterval(()=>{
+          handleCharClick(' ')
+        },100)
+      },1000)
+    }
+    else if(keyPressed.type == '<'){
+      clearInterval(intervalRef.current);
+      clearTimeout(timeoutRef.current);
+      caretHandler(-1)
+      timeoutRef.current = setTimeout(()=>{
+        intervalRef.current=setInterval(()=>{
+          caretHandler(-1)
+        },100)
+      },1000)
+    }
+    else if(keyPressed.type == '>'){
+      clearInterval(intervalRef.current);
+      clearTimeout(timeoutRef.current);
+      caretHandler(1)
+      timeoutRef.current = setTimeout(()=>{
+        intervalRef.current=setInterval(()=>{
+          caretHandler(1)
+        },100)
+      },1000)
+    }
+    else if(keyPressed.type === 'Del'){
+      console.log('Del')
+      clearInterval(intervalRef.current);
+      clearTimeout(timeoutRef.current);
+      handleCharClick(null)
+      timeoutRef.current = setTimeout(()=>{
+        intervalRef.current=setInterval(()=>{
+          handleCharClick(null)
+        },100)
+      },1000)
+    }
+    }
+    if(!keyPressed.isPressed){
+      clearTimeout(timeoutRef.current)
+      clearInterval(intervalRef.current);
+      intervalRef.current = null;
+      timeoutRef.current = null;
+    }
+  },[keyPressed])
 
   const handleConsonantClick = (consonant) => {
     textAreaRef.current.focus();
@@ -20,7 +75,7 @@ function VirtualKeyboard({ onKeyPress,textAreaRef,caretHandler }) {
     textAreaRef.current.focus();
 
 
-    if(!char){onKeyPress(char,true);return} //handle Del button
+    if(!char){console.log('hello');onKeyPress(char,true);return} //handle Del button
 
     
     let pos = textAreaRef.current.selectionStart;
@@ -71,10 +126,11 @@ function VirtualKeyboard({ onKeyPress,textAreaRef,caretHandler }) {
             col2={VOWELS['dirgha'].slice(5)}
             keyPress={handleCharClick}
             layers={{currentLayer,setLayer}}
+            longPress={{keyPressed,setkeyPressed}}
             caretHandler={caretHandler}
             isChildren={true}
         >
-            <button className='w-36 md:w-48 border-2 border-red-400 h-full text-white bg-red-500 text-bolder' onClick={()=>{handleCharClick(' ')}}>स्पेस</button>
+            <button className='w-36 md:w-48 border-2 border-red-400 h-full text-white bg-red-500 text-bolder' onMouseDown={()=>{setkeyPressed(prevVal=>{return {isPressed:true,type:' '}})}} onMouseUp={()=>setkeyPressed(prevVal=>{return {isPressed:false,type:null}})} onTouchStart={()=>setkeyPressed(prevVal=>{return {isPressed:true,type:' '}})} onTouchEnd={()=>{setkeyPressed(prevVal=>{return {isPressed:false,type:null}})}} onTouchCancel={()=>{setkeyPressed(prevVal=>{return {isPressed:false,type:null}})}}>स्पेस</button>
         </Layout>
     </Layout>
     </div>
@@ -96,14 +152,15 @@ function VirtualKeyboard({ onKeyPress,textAreaRef,caretHandler }) {
             layers={{currentLayer,setLayer}}
             caretHandler={caretHandler}
             isChildren={true}
+            longPress={{keyPressed,setkeyPressed}}
         >
-            <button className='w-36 md:w-48 border-2 border-red-400 h-full text-white bg-red-500 text-bolder' onClick={()=>{handleCharClick(' ')}}>स्पेस</button>
+            <button className='w-36 md:w-48 border-2 border-red-400 h-full text-white bg-red-500 text-bolder' onMouseDown={()=>setkeyPressed(prevVal=>{return {isPressed:true,type:' '}})} onMouseUp={()=>setkeyPressed(prevVal=>{return {isPressed:false,type:null}})} onTouchStart={()=>setkeyPressed(prevVal=>{return {isPressed:true,type:' '}})} onTouchEnd={()=>{setkeyPressed(prevVal=>{return {isPressed:false,type:null}})}} onTouchCancel={()=>{setkeyPressed(prevVal=>{return {isPressed:false,type:null}})}}>स्पेस</button>
         </Layout>
     </Layout>
     </div>
   }{
     currentLayer==3 && <div className='w-full md:w-fit md:ml-2 flex items-center justify-center'>
-        <ParallelColLayout cols={[['+','-','/','*','<'],['1','4','7','Layer','%'],['2','5','8','0','='],['3','6','9','.','₹'],SPECIAL_CHARS['set2'],['Del','^','!','?','>']]} keyPress={handleCharClick} layers={{currentLayer,setLayer}} caretHandler={caretHandler} columnWidth={'w-1/6'}/>
+        <ParallelColLayout cols={[['+','-','/','*','<'],['1','4','7','Layer','%'],['2','5','8','0','='],['3','6','9','.','₹'],SPECIAL_CHARS['set2'],['Del','^','!','?','>']]} keyPress={handleCharClick} layers={{currentLayer,setLayer}} caretHandler={caretHandler} columnWidth={'w-1/6'} longPress={{keyPressed,setkeyPressed}}/>
 
     </div>
   }

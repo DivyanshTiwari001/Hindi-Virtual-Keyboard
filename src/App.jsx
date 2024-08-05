@@ -7,18 +7,17 @@ function App() {
   const [caretPosition,setCaretPosition] = useState(0);
 
   const caretHandler=(value)=>{
+    textareaRef.current.focus();
     if(caretPosition+value < 0)return;
     setCaretPosition(prevCaretPos=>prevCaretPos+value);
     textareaRef.current.focus();
     textareaRef.current.setSelectionRange(caretPosition+value, caretPosition+value);
   }
 
-  useEffect(()=>{
-    caretHandler(0)
-  },[caretPosition,caretHandler])
-
   const handleKeyPresses = (character,removeLast)=>{
+    textareaRef.current.focus()
     let pos = textareaRef.current.selectionStart;
+    console.log(pos)
     if(character===null && removeLast){
       if(pos==0)return;
       setCaretPosition(prevpos=>pos-1)
