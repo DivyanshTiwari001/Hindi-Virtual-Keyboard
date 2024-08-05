@@ -1,7 +1,7 @@
 import { useRef } from "react"
 
 function Layout({row1,row2,col1,col2,keyPress,isChildren,children,layers,caretHandler,longPress=null}) {
-    const darkChars = ['Layer','Del','<','>']
+    const darkChars = ['Layer','⌫','<','>','↵']
   return (
     <div className='flex flex-col'>
         {
@@ -19,24 +19,6 @@ function Layout({row1,row2,col1,col2,keyPress,isChildren,children,layers,caretHa
                             // return
                         }
                         else keyPress(elem)}}
-                    // onMouseDown={()=>{
-                    //     if(elem==='<')longPress?.setkeyPressed(prevValue=>{return{isPressed:true,type:'<'}})
-                    //     if(elem==='>')longPress?.setkeyPressed(prevValue=>{return{isPressed:true,type:'>'}})
-                    // }}
-                    // onTouchStart={()=>{
-                    //     if(elem==='<')longPress?.setkeyPressed(prevValue=>{return{isPressed:true,type:'<'}})
-                    //     if(elem==='>')longPress?.setkeyPressed(prevValue=>{return{isPressed:true,type:'>'}})
-                    // }}
-                    // onTouchEnd={()=>{
-                    //     longPress?.setkeyPressed(prevValue=>{return{isPressed:false,type:null}})
-                    // }}
-                    
-                    // onTouchCancel={()=>{
-                    //     longPress?.setkeyPressed(prevValue=>{return{isPressed:false,type:null}})
-                    // }}
-                    // onMouseUp={()=>{
-                    //     longPress?.setkeyPressed(prevValue=>{return{isPressed:false,type:null}})
-                    // }}
                     
                     key={elem+index}>
                             {elem}
@@ -82,8 +64,7 @@ function Layout({row1,row2,col1,col2,keyPress,isChildren,children,layers,caretHa
                 row2.map((elem,index)=>{
                     return <button className={darkChars.includes(elem)?"bg-blue-700 text-white font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded md:w-16 w-12":"bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded md:w-16 w-12" } 
                     onClick={()=>{
-                        if(elem=='Del'){
-                            // keyPress(null,true)
+                        if(elem=='⌫'){
                             return
                         }
                         else if(elem=='Layer'){
@@ -92,21 +73,12 @@ function Layout({row1,row2,col1,col2,keyPress,isChildren,children,layers,caretHa
                                 return prevLayer+1;
                             })
                         }
+                        else if(elem==='↵')return
                         else keyPress(elem)
                         }}
                         onMouseDown={()=>{
-                            if(elem==='Del')longPress?.setkeyPressed(prevValue=>{return{isPressed:true,type:'Del'}})
-                        }}
-                        onTouchStart={()=>{
-                            if(elem==='Del')longPress?.setkeyPressed(prevValue=>{return{isPressed:true,type:'Del'}})
-                            
-                        }}
-                        onTouchEnd={()=>{
-                            longPress?.setkeyPressed(prevValue=>{return{isPressed:false,type:null}})
-                        }}
-                        
-                        onTouchCancel={()=>{
-                            longPress?.setkeyPressed(prevValue=>{return{isPressed:false,type:null}})
+                            if(elem==='⌫')longPress?.setkeyPressed(prevValue=>{return{isPressed:true,type:'⌫'}})
+                            if(elem==='↵')longPress?.setkeyPressed(prevValue=>{return{isPressed:true,type:'↵'}})
                         }}
                         onMouseUp={()=>{
                             longPress?.setkeyPressed(prevValue=>{return{isPressed:false,type:null}})

@@ -7,6 +7,7 @@ function App() {
   const [caretPosition,setCaretPosition] = useState(0);
 
   const caretHandler=(value)=>{
+    console.log("Hello : "+caretPosition)
     textareaRef.current.focus();
     if(caretPosition+value < 0)return;
     setCaretPosition(prevCaretPos=>prevCaretPos+value);
@@ -14,28 +15,35 @@ function App() {
     textareaRef.current.setSelectionRange(caretPosition+value, caretPosition+value);
   }
 
+  useEffect(()=>{
+    // console.log("caretPosition : "+caretPosition)
+    caretHandler(0)
+  },[caretPosition])
+  
   const handleKeyPresses = (character,removeLast)=>{
     textareaRef.current.focus()
     let pos = textareaRef.current.selectionStart;
-    console.log(pos)
     if(character===null && removeLast){
       if(pos==0)return;
       setCaretPosition(prevpos=>pos-1)
       setText(prevText=>{
         return prevText.slice(0,pos-1) + prevText.slice(pos);
       })
+      caretHandler(0)
     }
     else if(removeLast){
       setCaretPosition(prevpos=>pos+character.length)
       setText(prevText=>{
         return  prevText.slice(0,pos-1) + character + prevText.slice(pos);
       })
+      caretHandler(0)
     }
     else{
       setCaretPosition(prevpos=>pos+character.length)
       setText(prevText=>{
         return prevText.slice(0,pos) + character + prevText.slice(pos)
       })
+      caretHandler(0)
     }
   }
   return(
