@@ -9,7 +9,7 @@ function ParallelColLayout({cols,keyPress,layers,caretHandler,columnWidth,longPr
                 return <div className={`flex flex-col item-center ${columnWidth}`}>
                     {
                         charList.map((elem,index)=>{
-                            return <button className={darkChars.includes(elem)?"bg-blue-700 text-white font-semibold  py-2 px-4 border border-blue-500 active:border-transparent rounded w-full":"bg-transparent active:bg-blue-500 text-blue-700 font-semibold active:text-white py-2 px-4 border border-blue-500 active:border-transparent rounded w-full" }
+                            return <button className={darkChars.includes(elem)?"bg-blue-700 text-white font-semibold select-none py-2 px-4 border border-blue-500 active:border-transparent rounded w-full":"bg-transparent active:bg-blue-500 select-none text-blue-700 font-semibold active:text-white py-2 px-4 border border-blue-500 active:border-transparent rounded w-full" }
                             onClick={
                                 ()=>{
                                     if(elem=='⌫'){
@@ -32,12 +32,23 @@ function ParallelColLayout({cols,keyPress,layers,caretHandler,columnWidth,longPr
                                 
                             }
                             onMouseDown={()=>{
+                                if(window.matchMedia('(pointer: coarse)').matches)return
                                 if(elem==='⌫')longPress?.setkeyPressed(prevValue=>{return{isPressed:true,type:'⌫'}})
-                                if(elem==='↵')longPress?.setkeyPressed(prevValue=>{return{isPressed:true,type:'↵'}})
+                                // if(elem==='↵')longPress?.setkeyPressed(prevValue=>{return{isPressed:true,type:'↵'}})
                             }}
                             onMouseUp={()=>{
                                 longPress?.setkeyPressed(prevValue=>{return{isPressed:false,type:null}})
                             }}
+                            onTouchStart={
+                                ()=>{
+                                    if(window.matchMedia('(pointer: coarse)').matches){
+                                        if(elem==='⌫')longPress?.setkeyPressed(prevValue=>{return{isPressed:true,type:'⌫'}})
+                                        // if(elem==='↵')longPress?.setkeyPressed(prevValue=>{return{isPressed:true,type:'↵'}})
+                                    }
+                                }
+                            }
+                            onTouchEnd={()=>longPress?.setkeyPressed(prevVal=>{return {isPressed:false,type:null}})}
+                            onTouchCancel={()=>longPress?.setkeyPressed(prevVal=>{return {isPressed:false,type:null}})}
                             key={elem+index}>
                                    {elem==='Layer'?`${layers.currentLayer}/3`:elem}
                             </button>

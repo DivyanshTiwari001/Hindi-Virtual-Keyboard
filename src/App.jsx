@@ -16,7 +16,7 @@ function App() {
   }
 
   useEffect(()=>{
-    // console.log("caretPosition : "+caretPosition)
+    console.log("caretPosition : "+caretPosition)
     caretHandler(0)
   },[caretPosition])
   

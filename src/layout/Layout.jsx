@@ -8,7 +8,7 @@ function Layout({row1,row2,col1,col2,keyPress,isChildren,children,layers,caretHa
             row1 && <div className='flex justify-center '>
             {
                 row1.map((elem,index)=>{
-                    return <button className={darkChars.includes(elem)?"bg-blue-700  font-semibold text-white py-2 px-4 border border-blue-500 active:border-transparent rounded md:w-16 w-12":"bg-transparent active:bg-blue-500 text-blue-700 font-semibold active:text-white py-2 px-4 border border-blue-500 active:border-transparent rounded md:w-16 w-12" } 
+                    return <button className={darkChars.includes(elem)?"bg-blue-700 select-none font-semibold text-white py-2 px-4 border border-blue-500 active:border-transparent rounded md:w-16 w-12":"bg-transparent select-none active:bg-blue-500 text-blue-700 font-semibold active:text-white py-2 px-4 border border-blue-500 active:border-transparent rounded md:w-16 w-12" } 
                     onClick={()=>{
                         if(elem==='<'){
                             caretHandler(-1)
@@ -32,7 +32,7 @@ function Layout({row1,row2,col1,col2,keyPress,isChildren,children,layers,caretHa
                 col1 && <div className="flex flex-col">
                 {
                     col1.map((elem,index)=>{
-                        return <button className="bg-transparent active:bg-blue-500 text-blue-700  font-semibold active:text-white py-2 px-4 border border-blue-500 active:border-transparent rounded md:w-16 w-12" 
+                        return <button className="bg-transparent active:bg-blue-500 select-none text-blue-700  font-semibold active:text-white py-2 px-4 border border-blue-500 active:border-transparent rounded md:w-16 w-12" 
                         onClick={()=>{keyPress(elem)}}
                         key={elem+index}>
                                 {elem}
@@ -48,7 +48,7 @@ function Layout({row1,row2,col1,col2,keyPress,isChildren,children,layers,caretHa
                 col2 && <div className="flex flex-col">
                 {
                     col2.map((elem,index)=>{
-                        return <button className="bg-transparent active:bg-blue-500 text-blue-700 font-semibold active:text-white py-2 px-4 border border-blue-500 active:border-transparent rounded md:w-16 w-12" 
+                        return <button className="bg-transparent active:bg-blue-500 select-none text-blue-700 font-semibold active:text-white py-2 px-4 border border-blue-500 active:border-transparent rounded md:w-16 w-12" 
                         onClick={()=>{keyPress(elem)}}
                         key={elem+index}>
                                 {elem}
@@ -62,7 +62,7 @@ function Layout({row1,row2,col1,col2,keyPress,isChildren,children,layers,caretHa
            row2 && <div className='flex justify-center '>
             {
                 row2.map((elem,index)=>{
-                    return <button className={darkChars.includes(elem)?"bg-blue-700 text-white font-semibold  py-2 px-4 border border-blue-500 active:border-transparent rounded md:w-16 w-12":"bg-transparent active:bg-blue-500 text-blue-700 font-semibold active:text-white py-2 px-4 border border-blue-500 active:border-transparent rounded md:w-16 w-12" } 
+                    return <button className={darkChars.includes(elem)?"bg-blue-700 select-none text-white font-semibold  py-2 px-4 border border-blue-500 active:border-transparent rounded md:w-16 w-12":"bg-transparent select-none active:bg-blue-500 text-blue-700 font-semibold active:text-white py-2 px-4 border border-blue-500 active:border-transparent rounded md:w-16 w-12" } 
                     onClick={()=>{
                         if(elem=='⌫'){
                             return
@@ -77,12 +77,23 @@ function Layout({row1,row2,col1,col2,keyPress,isChildren,children,layers,caretHa
                         else keyPress(elem)
                         }}
                         onMouseDown={()=>{
+                            if(window.matchMedia('(pointer: coarse)').matches)return
                             if(elem==='⌫')longPress?.setkeyPressed(prevValue=>{return{isPressed:true,type:'⌫'}})
                             if(elem==='↵')longPress?.setkeyPressed(prevValue=>{return{isPressed:true,type:'↵'}})
                         }}
                         onMouseUp={()=>{
                             longPress?.setkeyPressed(prevValue=>{return{isPressed:false,type:null}})
                         }}
+                        onTouchStart={
+                            ()=>{
+                                if(window.matchMedia('(pointer: coarse)').matches){
+                                    if(elem==='⌫')longPress?.setkeyPressed(prevValue=>{return{isPressed:true,type:'⌫'}})
+                                    if(elem==='↵')longPress?.setkeyPressed(prevValue=>{return{isPressed:true,type:'↵'}})
+                                }
+                            }
+                        }
+                        onTouchEnd={()=>longPress?.setkeyPressed(prevVal=>{return {isPressed:false,type:null}})}
+                        onTouchCancel={()=>longPress?.setkeyPressed(prevVal=>{return {isPressed:false,type:null}})}
                     key={elem+index}>
                             {elem==='Layer'?`${layers.currentLayer}/3`:elem}
                         </button>
