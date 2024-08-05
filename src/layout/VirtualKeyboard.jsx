@@ -131,7 +131,7 @@ function VirtualKeyboard({ onKeyPress,textAreaRef,caretHandler}) {
             caretHandler={caretHandler}
             isChildren={true}
         >
-            <button className='w-36 md:w-48 border-2 border-red-400 h-full text-white bg-red-500 text-bolder' onMouseDown={()=>{setkeyPressed(prevVal=>{return {isPressed:true,type:' '}})}} onMouseUp={()=>setkeyPressed(prevVal=>{return {isPressed:false,type:null}})} onTouchStart={()=>setkeyPressed(prevVal=>{return {isPressed:true,type:' '}})} onTouchEnd={()=>{setkeyPressed(prevVal=>{return {isPressed:false,type:null}})}} onTouchCancel={()=>{setkeyPressed(prevVal=>{return {isPressed:false,type:null}})}}>स्पेस</button>
+            <button className='w-36 md:w-48 border-2 border-red-400 h-full text-white bg-red-500 text-bolder' onMouseDown={()=>{setkeyPressed(prevVal=>{return {isPressed:true,type:' '}})}} onMouseUp={()=>setkeyPressed(prevVal=>{return {isPressed:false,type:null}})} >स्पेस</button>
         </Layout>
     </Layout>
     </div>
@@ -156,7 +156,7 @@ function VirtualKeyboard({ onKeyPress,textAreaRef,caretHandler}) {
             isChildren={true}
             longPress={{keyPressed,setkeyPressed}}
         >
-            <button className='w-36 md:w-48 border-2 border-red-400 h-full text-white bg-red-500 text-bolder' onMouseDown={()=>setkeyPressed(prevVal=>{return {isPressed:true,type:' '}})} onMouseUp={()=>setkeyPressed(prevVal=>{return {isPressed:false,type:null}})} onTouchStart={()=>setkeyPressed(prevVal=>{return {isPressed:true,type:' '}})} onTouchEnd={()=>{setkeyPressed(prevVal=>{return {isPressed:false,type:null}})}} onTouchCancel={()=>{setkeyPressed(prevVal=>{return {isPressed:false,type:null}})}}>स्पेस</button>
+            <button className='w-36 md:w-48 border-2 border-red-400 h-full text-white bg-red-500 text-bolder' onMouseDown={()=>setkeyPressed(prevVal=>{return {isPressed:true,type:' '}})} onMouseUp={()=>setkeyPressed(prevVal=>{return {isPressed:false,type:null}})}>स्पेस</button>
         </Layout>
     </Layout>
     </div>
