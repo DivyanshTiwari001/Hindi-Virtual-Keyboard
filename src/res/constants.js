@@ -5,7 +5,7 @@ export const VOWELS = {
 }
 export const SPECIAL_CHARS = {
     'set1': ['ं','ः','ॅ','ॉ','ँ'],
-    'set2' : ['ळ','॥','ऽ','ॐ','॰'] 
+    'set2' : ['ळ','॥','ऽ','ॐ','zwnj'] 
 }
 
 export const DIACRATICS = ['्', '', 'ा', 'ि','ी', 'ु', 'ू', 'ृ','ॄ', 'े', 'ै', 'ो','ौ','ं', 'ः','ँ', 'ॅ', 'ॉ']

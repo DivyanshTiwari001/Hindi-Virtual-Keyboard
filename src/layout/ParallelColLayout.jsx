@@ -1,7 +1,7 @@
 import React,{useRef} from 'react'
 
 function ParallelColLayout({cols,keyPress,layers,caretHandler,columnWidth,longPress}) {
-    const darkChars = ['Layer','⌫','<','>']
+    const darkChars = ['Layer','⌫','<','>','↵','zwj','zwnj']
   return (
     <div className='flex flex-row justify-center w-full'>
         {
@@ -13,6 +13,9 @@ function ParallelColLayout({cols,keyPress,layers,caretHandler,columnWidth,longPr
                             onClick={
                                 ()=>{
                                     if(elem=='⌫'){
+                                        return
+                                    }
+                                    else if(elem=='↵'){
                                         return
                                     }
                                     else if(elem=='Layer'){
@@ -27,6 +30,8 @@ function ParallelColLayout({cols,keyPress,layers,caretHandler,columnWidth,longPr
                                     else if(elem==='>'){
                                         caretHandler(1)
                                     }
+                                    else if(elem === 'zwj')keyPress('\u200D')
+                                    else if(elem === 'zwnj')keyPress('\u200C')
                                     else keyPress(elem)
                                 }
                                 
@@ -34,7 +39,7 @@ function ParallelColLayout({cols,keyPress,layers,caretHandler,columnWidth,longPr
                             onMouseDown={()=>{
                                 if(window.matchMedia('(pointer: coarse)').matches)return
                                 if(elem==='⌫')longPress?.setkeyPressed(prevValue=>{return{isPressed:true,type:'⌫'}})
-                                // if(elem==='↵')longPress?.setkeyPressed(prevValue=>{return{isPressed:true,type:'↵'}})
+                                if(elem==='↵')longPress?.setkeyPressed(prevValue=>{return{isPressed:true,type:'↵'}})
                             }}
                             onMouseUp={()=>{
                                 longPress?.setkeyPressed(prevValue=>{return{isPressed:false,type:null}})
@@ -43,7 +48,7 @@ function ParallelColLayout({cols,keyPress,layers,caretHandler,columnWidth,longPr
                                 ()=>{
                                     if(window.matchMedia('(pointer: coarse)').matches){
                                         if(elem==='⌫')longPress?.setkeyPressed(prevValue=>{return{isPressed:true,type:'⌫'}})
-                                        // if(elem==='↵')longPress?.setkeyPressed(prevValue=>{return{isPressed:true,type:'↵'}})
+                                        if(elem==='↵')longPress?.setkeyPressed(prevValue=>{return{isPressed:true,type:'↵'}})
                                     }
                                 }
                             }

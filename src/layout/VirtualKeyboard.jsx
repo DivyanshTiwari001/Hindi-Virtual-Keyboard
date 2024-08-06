@@ -180,7 +180,7 @@ function VirtualKeyboard({ onKeyPress,textAreaRef,caretHandler}) {
     </div>
   }{
     currentLayer==3 && <div className='w-full md:w-fit md:ml-2 flex items-center justify-center'>
-        <ParallelColLayout cols={[['+','-','/','*','<'],['1','4','7','Layer','%'],['2','5','8','0','='],['3','6','9','.','₹'],SPECIAL_CHARS['set2'],['⌫','^','!','?','>']]} keyPress={handleCharClick} layers={{currentLayer,setLayer}} caretHandler={caretHandler} columnWidth={'w-1/6'} longPress={{keyPressed,setkeyPressed}}/>
+        <ParallelColLayout cols={[['+','-','/','*','<'],['1','4','7','Layer','zwj'],['2','5','8','0','='],['3','6','9','.','₹'],SPECIAL_CHARS['set2'],['⌫','॰','!','?','>']]} keyPress={handleCharClick} layers={{currentLayer,setLayer}} caretHandler={caretHandler} columnWidth={'w-1/6'} longPress={{keyPressed,setkeyPressed}}/>
 
     </div>
   }
